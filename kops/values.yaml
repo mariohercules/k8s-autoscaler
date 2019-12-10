@@ -1,0 +1,17 @@
+prometheus-adapter:
+  enabled: true
+  prometheus:
+    url: http://prometheus.namespace.svc.cluster.local
+  rules:
+    default: true
+    custom:
+    - seriesQuery: '{__name__="envoy_cluster_external_upstream_rq_time_bucket",namespace!="",pod!=""}'
+      seriesFilters: []
+      resources:
+        overrides:
+          namespace: {resource: "namespace"}
+          pod: {resource: "pod"}
+      name:
+        matches: "^(.*)_bucket"
+        as: "${1}_success_99p" 
+      metricsQuery: 'histogram_quantile(0.99, rate(envoy_cluster_external_upstream_rq_time_bucket{envoy_cluster_name="cluster_kube_znn_8080"}[10s]))'

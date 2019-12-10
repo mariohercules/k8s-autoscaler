@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubeznn-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: kube-znn
+            servicePort: 8080    
+# spec:
+#   rules:
+#   - host: kubeznn.k8s.local
+#     http:
+#       paths:
+#         - path: /
+#           backend:
+#             serviceName: kube-znn
+#             servicePort: 8080
+
+# kind: Ingress
+# metadata:
+#   name: example-ingress
+#   annotations:
+#     ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#         - path: /
+#           backend:
+#             serviceName: kube-znn
+#             servicePort: 8080

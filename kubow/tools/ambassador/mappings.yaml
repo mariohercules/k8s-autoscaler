@@ -1,0 +1,7 @@
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: news
+spec:
+  prefix: /
+  service: kube-znn:8080
